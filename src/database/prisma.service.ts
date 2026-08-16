@@ -31,7 +31,7 @@ export class PrismaService
     });
   }
 
-  async onModuleInit(): Promise<void> {
+  async onModuleInit() {
     try {
       await this.$connect();
       await this.$queryRaw`SELECT 1`;

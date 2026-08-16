@@ -1,16 +1,16 @@
 import { IsNumber, IsString, MinLength } from "class-validator";
 
 export class CreateOrderDto{
-    @IsNumber()
-    id: number;
     @IsString()
     @MinLength(3)
-    product: string;
+    name: string;
     @IsNumber()
     quantity: number;
-    constructor(id: number, product: string, quantity: number){
-        this.id = id;
-        this.product = product;
+    @IsNumber()
+    userId: number;
+    constructor(name: string, quantity: number, userId: number){
+        this.name = name;
         this.quantity = quantity;
+        this.userId = userId
     }
 }

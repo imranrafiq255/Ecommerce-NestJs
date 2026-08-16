@@ -14,7 +14,16 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
+  id     Int     @id @default(autoincrement())
+  email  String  @unique
+  name   String
+  orders Order[]
+}
+
+model Order {
+  id       Int    @id @default(autoincrement())
+  name     String
+  quantity Int    @default(0)
+  userId   Int
+  orderBy  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

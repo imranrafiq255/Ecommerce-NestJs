@@ -3,10 +3,10 @@ import {OrdersRepository} from "../repositories/orders.repository"
 @Injectable()
 export class OrdersService{
     constructor(private readonly ordersRepository: OrdersRepository){}
-    getOrders(){
-        return [{id : 1, product : "Laptop", quantity : 2}, {id : 2, product : "Phone", quantity : 5}];
+    async getOrders(){
+        return this.ordersRepository.getOrders();
     }
-    createOrder(order: any){
-        return order;
+    createOrder(order: {name: string, quantity: number, userId: number}){
+        return this.ordersRepository.createOrder(order);
     }
 }
