@@ -10,6 +10,6 @@ async function bootstrap() {
     transform : true
   }))
   app.setGlobalPrefix('api');
-  await app.listen(configService.get<number>('PORT') ?? 3000);
+  await app.listen(configService.get<number>('app.port') ?? 3000);
 }
 bootstrap();
