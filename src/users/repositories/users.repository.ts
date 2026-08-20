@@ -7,7 +7,7 @@ export class UsersRepository{
     async findAll(){
         return this.prisma.user.findMany();
     }
-    async create(data: {email : string, name: string}){
+    async create(data: {email : string, name: string, password: string}){
         return this.prisma.user.create({
             data
         });
