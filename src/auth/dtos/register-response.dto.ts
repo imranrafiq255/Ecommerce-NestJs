@@ -10,6 +10,6 @@ export class RegisterResponseDto{
     constructor(name:string, email: string, partial: Partial<RegisterResponseDto>){
         this.name = name;
         this.email = email;
-        // Object.assign(this, partial);
+        Object.assign(this, partial);
     }
 }

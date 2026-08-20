@@ -7,4 +7,11 @@ export class AuthRepository{
     async register(data: {name: string, email:string, password:string}){
         return this.prisma.user.create({data});
     }
+    async login(email: string){
+        return await this.prisma.user.findFirstOrThrow({
+            where : {
+                email
+            }
+        })
+    }
 }

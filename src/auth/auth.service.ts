@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { AuthRepository } from "./repositories/auth.repository";
 import { PasswordService } from "./password/password.service";
 import { Prisma } from "../generated/prisma/client";
@@ -18,5 +18,26 @@ export class AuthService{
                 throw error;
             }
         }
+    }
+    async login(data: {email:string, password:string}){
+        try{
+        const user = await this.authRepository.login(data.email);
+        if (!user){
+            return new NotFoundException("Invalid email");
+        }
+        const comparedPassword = await this.passwordService.verify(user.password, data.password);
+        if (!comparedPassword){
+            return new UnauthorizedException("Incorrect password");
+        }
+        return user;
+    }
+     catch(error){
+        if (error instanceof Prisma.PrismaClientKnownRequestError){
+            if(error.code === "P2025"){
+                return new NotFoundException("Invalid email")
+            }
+            throw error;
+        }
+     }
     }
 };
