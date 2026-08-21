@@ -2,10 +2,11 @@ import { ConflictException, Injectable, NotFoundException, UnauthorizedException
 import { AuthRepository } from "./repositories/auth.repository";
 import { PasswordService } from "./password/password.service";
 import { Prisma } from "../generated/prisma/client";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService{
-    constructor(private readonly authRepository: AuthRepository, private readonly passwordService: PasswordService){}
+    constructor(private readonly authRepository: AuthRepository, private readonly passwordService: PasswordService, private readonly jwtService: JwtService){}
     async register(data: {name:string, email:string, password:string}){
         try{
             const hashedPassword = await this.passwordService.hash(data.password);
@@ -29,7 +30,15 @@ export class AuthService{
         if (!comparedPassword){
             return new UnauthorizedException("Incorrect password");
         }
-        return user;
+        const payload = {
+            sub : user.id,
+            name: user.name
+        }
+        const accessToken = await this.jwtService.signAsync(payload);
+        return {
+            accessToken,
+            tokenType : "Bearer"
+        }
     }
      catch(error){
         if (error instanceof Prisma.PrismaClientKnownRequestError){

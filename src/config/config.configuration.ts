@@ -8,6 +8,10 @@ export default () => ({
     },
     redis : {
         url : process.env.REDIS_URL
+    },
+    jwt : {
+        jwtSecret : process.env.JWT_SECRET,
+        jwtAccessTokenExpiresIn : process.env.JWT_ACCESS_TOKEN_EXPIRES_IN
     }
 })
  

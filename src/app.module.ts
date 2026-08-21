@@ -16,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         // Fetch the string from your .env file
-        const redisUrl = configService.get<string>('REDIS_URL') || 'redis://localhost:6379';
+        const redisUrl = configService.get<string>('redis.url') || 'redis://localhost:6379';
 
         return {
           throttlers: [
