@@ -1,12 +1,15 @@
-import { Body, ClassSerializerInterceptor, Controller, Get, HttpCode, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpCode, Param, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "../auth.service";
 import { RegisterRequestDto } from "../dtos/register-request.dto";
 import { plainToInstance } from "class-transformer";
 import { RegisterResponseDto } from "../dtos/register-response.dto";
 import { LoginRequestDto } from "../dtos/login-request.dto";
-import { LoginResponseDto } from "../dtos/login-response.dto";
 import { JwtAuthGuard } from "../guards/jwt-auth.guard";
 import * as AuthTypes from "../interfaces/request-with-user.interface";
+import { Role } from "../enums/enum.role";
+import { Roles } from "../decorators/roles.decorator";
+import { LoginResponseDto } from "../dtos/login-response.dto";
+import { RolesGuard } from "../guards/roles.guard";
 // 1. IMPORT REQUEST FROM EXPRESS
 
 @Controller("auth")
@@ -31,5 +34,11 @@ export class AuthController {
     // 3. EXPLICITLY TYPE THE REQUEST OBJECT
     getCurrentUser(@Req() request: AuthTypes.RequestWithUser) {
         return request.user;
+    }
+    @Delete(":id")
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.Admin)
+    async deleteUser(@Param("id") id: number){
+        return plainToInstance(LoginResponseDto,this.authService.deleteUser(id));
     }
 }

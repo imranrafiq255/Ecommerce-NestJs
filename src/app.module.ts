@@ -10,6 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import Redis from 'ioredis';
 import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './auth/guards/roles.guard';
 @Module({
     imports : [ConfigModule.forRoot({isGlobal: true, load : [configConfiguration], validationSchema : schemaValidation}), ThrottlerModule.forRootAsync({
       imports: [ConfigModule],

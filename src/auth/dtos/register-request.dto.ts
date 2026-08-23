@@ -1,4 +1,5 @@
 import {IsEmail, IsString, Matches} from "class-validator"
+import { Role } from "../enums/enum.role";
 export class RegisterRequestDto{
     @IsString()
     name : string;
@@ -11,10 +12,13 @@ export class RegisterRequestDto{
       message: 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
     }
   )
-    password: string
-    constructor(name:string, email:string, password: string){
+    password: string;
+    @IsString()
+    role: Role;
+    constructor(name:string, email:string, password: string,role: Role ){
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 }
