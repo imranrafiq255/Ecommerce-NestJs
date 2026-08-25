@@ -26,4 +26,4 @@ import { PassportModule } from "@nestjs/passport";
     // 2. NOW IT IS SAFE TO EXPORT BOTH
     exports : [PassportModule, JwtModule] 
 })
-export class AuthModule{}
+export class AuthModule{} 

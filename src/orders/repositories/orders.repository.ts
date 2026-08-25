@@ -12,6 +12,13 @@ export class OrdersRepository{
                         name : true,
                         email : true
                     }
+                },
+                product : {
+                    select : {
+                        id : true,
+                        name : true,
+                        price : true
+                    }
                 }
             },
         });

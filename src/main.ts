@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config';
 import helmet from "helmet";
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 async function bootstrap() {
   // NestExpressApplication configured for app.set
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -23,6 +24,9 @@ async function bootstrap() {
   // Api endpoint prefix
   app.setGlobalPrefix('api');
   app.set('trust proxy', 1);
+  app.useGlobalFilters(
+    new PrismaExceptionFilter()
+  )
   const configService = app.get(ConfigService);
   await app.listen(configService.get<number>('app.port') ?? 3000);
 }

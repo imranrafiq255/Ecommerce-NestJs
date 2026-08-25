@@ -8,7 +8,7 @@ import { Role } from "./enums/enum.role";
 @Injectable()
 export class AuthService{
     constructor(private readonly authRepository: AuthRepository, private readonly passwordService: PasswordService, private readonly jwtService: JwtService){}
-    async register(data: {name:string, email:string, password:string, role:Role}){
+    async register(data: {name:string, email:string, password:string, role?:Role}){
         try{
             const hashedPassword = await this.passwordService.hash(data.password);
             return await this.authRepository.register({name: data.name, email: data.email, password: hashedPassword, role: data.role});

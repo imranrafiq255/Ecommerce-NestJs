@@ -10,7 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import Redis from 'ioredis';
 import { AuthModule } from './auth/auth.module';
-import { RolesGuard } from './auth/guards/roles.guard';
+import { ProductsModule } from './products/products.module';
 @Module({
     imports : [ConfigModule.forRoot({isGlobal: true, load : [configConfiguration], validationSchema : schemaValidation}), ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
@@ -30,7 +30,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
           storage: new ThrottlerStorageRedisService(new Redis(redisUrl)),
         };
       },
-    }), PrismaModule, UsersModule, OrdersModule, AuthModule],
-    providers : [{provide : APP_GUARD, useClass : ThrottlerGuard}]
+    }), PrismaModule, UsersModule, OrdersModule, AuthModule, ProductsModule],
+    providers : [{provide : APP_GUARD, useClass : ThrottlerGuard}],
 })
 export class AppModule{} 

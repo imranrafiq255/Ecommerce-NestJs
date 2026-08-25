@@ -1,4 +1,4 @@
-import {IsEmail, IsString, Matches} from "class-validator"
+import {IsEmail, IsEnum, IsOptional, IsString, Matches} from "class-validator"
 import { Role } from "../enums/enum.role";
 export class RegisterRequestDto{
     @IsString()
@@ -13,12 +13,12 @@ export class RegisterRequestDto{
     }
   )
     password: string;
-    @IsString()
-    role: Role;
-    constructor(name:string, email:string, password: string,role: Role ){
+    @IsOptional()
+    @IsEnum(Role, {message : "Role must be a valid enum"})
+    role?: Role;
+    constructor(name:string, email:string, password: string){
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 }

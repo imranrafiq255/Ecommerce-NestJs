@@ -5,7 +5,7 @@ import { Role } from "../enums/enum.role";
 @Injectable()
 export class AuthRepository{
     constructor(private readonly prisma: PrismaService){}
-    async register(data: {name: string, email:string, password:string,role:Role}){
+    async register(data: {name: string, email:string, password:string,role?:Role}){
         return this.prisma.user.create({data});
     }
     async login(email: string) : Promise <User | null> {

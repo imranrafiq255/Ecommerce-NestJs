@@ -7,10 +7,10 @@ export class CreateOrderDto{
     @IsNumber()
     quantity: number;
     @IsNumber()
-    userId: number;
-    constructor(name: string, quantity: number, userId: number){
+    productId: number;
+    constructor(name: string, quantity: number, productId: number){
         this.name = name;
         this.quantity = quantity;
-        this.userId = userId
+        this.productId = productId;
     }
 }

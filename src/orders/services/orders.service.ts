@@ -6,7 +6,7 @@ export class OrdersService{
     async getOrders(){
         return this.ordersRepository.getOrders();
     }
-    createOrder(order: {name: string, quantity: number, userId: number}){
+    createOrder(order: {name: string, quantity: number, productId: number, userId: number}){
         return this.ordersRepository.createOrder(order);
     }
 }
