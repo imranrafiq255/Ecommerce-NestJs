@@ -5,11 +5,13 @@ import { ConfigService } from '@nestjs/config';
 import helmet from "helmet";
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
+import cookieParser from "cookie-parser";
 async function bootstrap() {
   // NestExpressApplication configured for app.set
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   // Security Header Checks
   app.use(helmet());
+  app.use(cookieParser())
   // Cors
   app.enableCors({
     origin : ["http://localhost:3000"],

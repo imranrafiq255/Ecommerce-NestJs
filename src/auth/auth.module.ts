@@ -7,23 +7,22 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { PassportModule } from "@nestjs/passport";
+import { SessionsRepository } from "./repositories/sessions.repository";
+import { JwtRefreshTokenStrategy } from "./strategies/refresh-token.strategy";
 
 @Module({
     imports : [
-        // 1. ADD PASSPORTMODULE HERE SO NESTJS CAN TRACK IT
         PassportModule.register({ defaultStrategy: 'jwt' }), 
-        
         JwtModule.registerAsync({
           inject : [ConfigService],
           useFactory : (configService: ConfigService) => ({
-              secret : configService.getOrThrow<string>("jwt.jwtSecret"), 
+              secret : configService.getOrThrow<string>("jwt.jwtAccessSecret"), 
               signOptions : {expiresIn : configService.getOrThrow("jwt.jwtAccessTokenExpiresIn")}
           })
         })
     ],
     controllers : [AuthController],
-    providers : [AuthService, PasswordService, AuthRepository, JwtStrategy],
-    // 2. NOW IT IS SAFE TO EXPORT BOTH
+    providers : [AuthService, PasswordService, AuthRepository, JwtStrategy, SessionsRepository, JwtRefreshTokenStrategy],
     exports : [PassportModule, JwtModule] 
 })
 export class AuthModule{} 

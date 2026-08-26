@@ -1,5 +1,5 @@
 import { Expose, Transform, Type } from "class-transformer";
-import { IsNumber, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 export class OrderUserDto{
     @Expose()

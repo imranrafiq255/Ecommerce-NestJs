@@ -20,4 +20,9 @@ export class AuthRepository{
             where : {id}
         })
     }
+    async findById(id: number){
+        return await this.prisma.user.findUnique({
+            where : {id}
+        })
+    }
 }
